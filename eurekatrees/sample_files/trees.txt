@@ -1,0 +1,60 @@
+  Tree 0:
+    If (feature 0 <= 0.0)
+     If (feature 1 <= 0.0)
+      Predict: 0.0
+     Else (feature 1 > 0.0)
+      Predict: 1.0
+    Else (feature 0 > 0.0)
+     If (feature 2 <= 0.0)
+      If (feature 3 <= 0.0)
+       If (feature 4 <= 0.0)
+        Predict: 0.0
+       Else (feature 4 > 0.0)
+        Predict: 1.0
+      Else (feature 3 > 0.0)
+       If (feature 5 <= 0.0)
+        Predict: 1.0
+       Else (feature 5 > 0.0)
+        Predict: 0.0
+     Else (feature 2 > 0.0)
+      Predict: 1.0
+  Tree 1:
+    If (feature 0 <= 0.0)
+     If (feature 1 <= 0.0)
+      Predict: 0.0
+     Else (feature 1 > 0.0)
+      Predict: 1.0
+    Else (feature 0 > 0.0)
+     If (feature 2 <= 0.0)
+      If (feature 3 <= 0.0)
+       If (feature 4 <= 0.0)
+        Predict: 0.0
+       Else (feature 4 > 0.0)
+        Predict: 1.0
+      Else (feature 3 > 0.0)
+       If (feature 5 <= 0.0)
+        Predict: 1.0
+       Else (feature 5 > 0.0)
+        Predict: 0.0
+     Else (feature 2 > 0.0)
+      Predict: 1.0
+  Tree 2:
+    If (feature 0 <= 0.0)
+     If (feature 1 <= 0.0)
+      Predict: 0.0
+     Else (feature 1 > 0.0)
+      Predict: 1.0
+    Else (feature 0 > 0.0)
+     If (feature 2 <= 0.0)
+      If (feature 3 <= 0.0)
+       If (feature 4 <= 0.0)
+        Predict: 0.0
+       Else (feature 4 > 0.0)
+        Predict: 1.0
+      Else (feature 3 > 0.0)
+       If (feature 5 <= 0.0)
+        Predict: 1.0
+       Else (feature 5 > 0.0)
+        Predict: 0.0
+     Else (feature 2 > 0.0)
+      Predict: 1.0
