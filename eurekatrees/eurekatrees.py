@@ -21,7 +21,7 @@ class Tree(object):
     def create_tree(self, tree, column_names):
         else_check = 0
         node = None
-        for line in tree['Contents']:
+        for index, line in enumerate(tree['Contents']):
             if line.startswith('If'):
                 data_str = line[line.find('(')+1:line.find(')')]
                 if len(column_names):
@@ -30,6 +30,8 @@ class Tree(object):
                     node = self.root = Node(data=data_str)
                 elif else_check:
                     else_check = 0
+                    while node.right :
+                        node = node.parent
                     node.right = Node(data=data_str)
                     node.right.parent = node
                     node = node.right
@@ -39,11 +41,11 @@ class Tree(object):
                     node = node.left
             elif line.startswith('Else'):
                 else_check = 1
-                if node.right:
-                    node = node.parent
             elif line.startswith('Predict'):
                 if else_check:
                     else_check = 0
+                    while node.right :
+                        node = node.parent
                     node.right = Node(data=line)
                     node.right.parent = node
                     node = node.parent
@@ -136,7 +138,7 @@ def main():
         column_name_dict = read_columns(args.columns)
     trees = read_trees(args.trees)
     tree_list = []
-    for tree in trees:
+    for index, tree in enumerate(trees):
         tree_obj = Tree()
         tree_obj.create_tree(tree, column_name_dict)
         node_list = tree_obj.preorder(tree_obj.root)
