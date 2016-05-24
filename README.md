@@ -13,3 +13,6 @@ visual version of the trees. You can get this from printing out the debug string
 
 The output are a bunch of HTML files. If you open up the file home.html it should allow you to easily 
 navigate to each of your trees.
+
+**Example Tree:**
+![Example Tree](ExampleTree.png)
