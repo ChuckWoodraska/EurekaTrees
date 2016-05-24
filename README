@@ -1,5 +1,0 @@
-Run:
-python eurekatrees.py --trees ./sample_files/trees.txt
-
-If you have a csv with the names of your features you can run that command with the columns switch.
-python eurekatrees.py --trees ./sample_files/trees.txt --columns ./sample_files/columns.csv
