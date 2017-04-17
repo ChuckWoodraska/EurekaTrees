@@ -35,7 +35,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-    var data = [{"name": "feature 0 <= 0.0", "parent": null}, {"name": "feature 1 <= 0.0", "parent": "feature 0 <= 0.0"}, {"name": 0, "parent": "feature 1 <= 0.0"}, {"name": 1, "parent": "feature 1 <= 0.0"}, {"name": "feature 2 <= 0.0", "parent": "feature 0 <= 0.0"}, {"name": "feature 3 <= 0.0", "parent": "feature 2 <= 0.0"}, {"name": "feature 4 <= 0.0", "parent": "feature 3 <= 0.0"}, {"name": 0, "parent": "feature 4 <= 0.0"}, {"name": 1, "parent": "feature 4 <= 0.0"}, {"name": "feature 5 <= 0.0", "parent": "feature 3 <= 0.0"}, {"name": 1, "parent": "feature 5 <= 0.0"}, {"name": 0, "parent": "feature 5 <= 0.0"}, {"name": 1, "parent": "feature 2 <= 0.0"}];
+    var data = [{"children": [{"children": [{"children": [], "name": 0.0}, {"children": [], "name": 1.0}], "name": "feature 1 <= 0.0"}, {"children": [{"children": [{"children": [{"children": [], "name": 0.0}, {"children": [], "name": 1.0}], "name": "feature 4 <= 0.0"}, {"children": [{"children": [], "name": 1.0}, {"children": [], "name": 0.0}], "name": "feature 5 <= 0.0"}], "name": "feature 3 <= 0.0"}, {"children": [], "name": 1.0}], "name": "feature 2 <= 0.0"}], "name": "feature 0 <= 0.0"}];
 
     var dataMap = data.reduce(function (map, node) {
         map[node.name] = node;

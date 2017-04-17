@@ -72,9 +72,21 @@ class Tree(object):
             self.preorder(node.right, node_list)
         return node_list
 
+    def get_js_struct(self, node, node_dict=None):
+        if node_dict is None:
+            node_dict = {'name': node.data, 'children': []}
+        if node is not None:
+            if node.left:
+                new_node_dict_left = {'name': node.left.data, 'children': []}
+                node_dict['children'].append(self.get_js_struct(node.left, new_node_dict_left))
+            if node.right:
+                new_node_dict_right = {'name': node.right.data, 'children': []}
+                node_dict['children'].append(self.get_js_struct(node.right, new_node_dict_right))
+        return node_dict
+
+
     def print_preorder(self, node):
         if node is not None:
-            print(node.data)
             self.print_preorder(node.left)
             self.print_preorder(node.right)
 
@@ -163,14 +175,8 @@ def main():
     for index, tree in enumerate(trees):
         tree_obj = Tree()
         tree_obj.create_tree(tree, column_name_dict)
-        node_list = tree_obj.preorder(tree_obj.root)
-        node_dict = {'tree': [], 'max_depth': tree_obj.max_depth, 'max_breadth': tree_obj.max_breadth}
-        for node in node_list:
-            name = node.data
-            parent = None
-            if node.parent:
-                parent = node.parent.data
-            node_dict['tree'].append({'name': name, 'parent': parent})
+        js_struct = tree_obj.get_js_struct(tree_obj.root)
+        node_dict = {'tree': [js_struct], 'max_depth': tree_obj.max_depth, 'max_breadth': tree_obj.max_breadth}
         tree_list.append(node_dict)
     make_tree_viz(tree_list)
 
