@@ -37,13 +37,82 @@
        Else (feature 5 > 0.0)
         Predict: 0.0
      Else (feature 2 > 0.0)
-      Predict: 1.0
+      If (feature 6 <= 0.0)
+       If (feature 7 <= 0.0)
+        If (feature 8 <= 0.0)
+         Predict: 0.0
+        Else (feature 8 > 0.0)
+         Predict: 1.0
+       Else (feature 7 > 0.0)
+        If (feature 9 <= 0.0)
+         Predict: 1.0
+        Else (feature 9 > 0.0)
+         Predict: 0.0
+      Else (feature 6 > 0.0)
+       If (feature 10 <= 0.0)
+        If (feature 11 <= 0.0)
+         If (feature 12 <= 0.0)
+          Predict: 0.0
+         Else (feature 12 > 0.0)
+          Predict: 1.0
+        Else (feature 11 > 0.0)
+         If (feature 13 <= 0.0)
+          Predict: 1.0
+         Else (feature 13 > 0.0)
+          Predict: 0.0
+       Else (feature 10 > 0.0)
+        If (feature 14 <= 0.0)
+         If (feature 15 <= 0.0)
+          If (feature 16 <= 0.0)
+           Predict: 0.0
+          Else (feature 16 > 0.0)
+           Predict: 1.0
+         Else (feature 15 > 0.0)
+          If (feature 17 <= 0.0)
+           Predict: 1.0
+          Else (feature 17 > 0.0)
+           Predict: 0.0
+        Else (feature 14 > 0.0)
+         Predict: 1.0
   Tree 2:
     If (feature 0 <= 0.0)
-     If (feature 1 <= 0.0)
-      Predict: 0.0
-     Else (feature 1 > 0.0)
-      Predict: 1.0
+      If (feature 29 <= 0.0)
+       If (feature 30 <= 0.0)
+        If (feature 31 <= 0.0)
+         Predict: 0.0
+        Else (feature 31 > 0.0)
+         Predict: 1.0
+       Else (feature 30 > 0.0)
+        If (feature 21 <= 0.0)
+         Predict: 1.0
+        Else (feature 21 > 0.0)
+         Predict: 0.0
+      Else (feature 29 > 0.0)
+       If (feature 22 <= 0.0)
+        If (feature 23 <= 0.0)
+         If (feature 24 <= 0.0)
+          Predict: 0.0
+         Else (feature 24 > 0.0)
+          Predict: 1.0
+        Else (feature 23 > 0.0)
+         If (feature 32 <= 0.0)
+          Predict: 1.0
+         Else (feature 32 > 0.0)
+          Predict: 0.0
+       Else (feature 22 > 0.0)
+        If (feature 25 <= 0.0)
+         If (feature 26 <= 0.0)
+          If (feature 27 <= 0.0)
+           Predict: 0.0
+          Else (feature 27 > 0.0)
+           Predict: 1.0
+         Else (feature 26 > 0.0)
+          If (feature 28 <= 0.0)
+           Predict: 1.0
+          Else (feature 28 > 0.0)
+           Predict: 0.0
+        Else (feature 25 > 0.0)
+         Predict: 1.0
     Else (feature 0 > 0.0)
      If (feature 2 <= 0.0)
       If (feature 3 <= 0.0)
@@ -57,4 +126,40 @@
        Else (feature 5 > 0.0)
         Predict: 0.0
      Else (feature 2 > 0.0)
-      Predict: 1.0
+      If (feature 6 <= 0.0)
+       If (feature 7 <= 0.0)
+        If (feature 8 <= 0.0)
+         Predict: 0.0
+        Else (feature 8 > 0.0)
+         Predict: 1.0
+       Else (feature 7 > 0.0)
+        If (feature 9 <= 0.0)
+         Predict: 1.0
+        Else (feature 9 > 0.0)
+         Predict: 0.0
+      Else (feature 6 > 0.0)
+       If (feature 10 <= 0.0)
+        If (feature 11 <= 0.0)
+         If (feature 12 <= 0.0)
+          Predict: 0.0
+         Else (feature 12 > 0.0)
+          Predict: 1.0
+        Else (feature 11 > 0.0)
+         If (feature 13 <= 0.0)
+          Predict: 1.0
+         Else (feature 13 > 0.0)
+          Predict: 0.0
+       Else (feature 10 > 0.0)
+        If (feature 14 <= 0.0)
+         If (feature 15 <= 0.0)
+          If (feature 16 <= 0.0)
+           Predict: 0.0
+          Else (feature 16 > 0.0)
+           Predict: 1.0
+         Else (feature 15 > 0.0)
+          If (feature 17 <= 0.0)
+           Predict: 1.0
+          Else (feature 17 > 0.0)
+           Predict: 0.0
+        Else (feature 14 > 0.0)
+         Predict: 1.0

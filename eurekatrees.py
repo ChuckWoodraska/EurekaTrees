@@ -17,6 +17,8 @@ class Node(object):
 class Tree(object):
     def __init__(self):
         self.root = None
+        self.max_depth = None
+        self.max_breadth = None
 
     def create_tree(self, tree, column_names):
         else_check = 0
@@ -30,7 +32,7 @@ class Tree(object):
                     node = self.root = Node(data=data_str)
                 elif else_check:
                     else_check = 0
-                    while node.right :
+                    while node.right:
                         node = node.parent
                     node.right = Node(data=data_str)
                     node.right.parent = node
@@ -44,14 +46,16 @@ class Tree(object):
             elif line.startswith('Predict'):
                 if else_check:
                     else_check = 0
-                    while node.right :
+                    while node.right:
                         node = node.parent
-                    node.right = Node(data=line)
+                    node.right = Node(data=float(line.rsplit(' ')[1]))
                     node.right.parent = node
                     node = node.parent
                 else:
-                    node.left = Node(data=line)
+                    node.left = Node(data=float(line.rsplit(' ')[1]))
                     node.left.parent = node
+        self.max_depth = self.get_max_depth(self.root) - 1
+        self.max_breadth = self.get_max_breadth(self.max_depth)
 
     def print_inorder(self, node):
         if node is not None:
@@ -80,6 +84,22 @@ class Tree(object):
             self.print_postorder(node.right)
             print(node.data)
 
+    def get_max_depth(self, node):
+        if node is None:
+            return 0
+        else:
+            left_depth = self.get_max_depth(node.left)
+            right_depth = self.get_max_depth(node.right)
+            if left_depth > right_depth:
+                return left_depth + 1
+            else:
+                return right_depth + 1
+
+    def get_max_breadth(self, max_depth=None):
+        if max_depth is None:
+            max_depth = self.get_max_depth(self.root)
+        return 2**max_depth
+
 
 def separate_trees(tree_file):
     tree = ''
@@ -107,7 +127,10 @@ def make_tree_viz(trees):
         home_html.write(result)
     tree_template = env.get_template("templates/tree_template.jinja2")
     for index, tree in enumerate(trees):
-        result = tree_template.render(tree=json.dumps(tree))
+        # These are kind of magic numbers for max_depth and max_breadth for how big the canvas needs to be
+        result = tree_template.render(tree=json.dumps(tree['tree']),
+                                      max_depth=tree['max_depth']*120,
+                                      max_breadth=tree['max_depth']*250)
         with open('trees/tree{0}.html'.format(index+1), 'w') as tree_html:
             tree_html.write(result)
 
@@ -128,10 +151,9 @@ def read_trees(trees_file):
 
 def main():
     parser = argparse.ArgumentParser(description='Parse a random forest')
-    parser.add_argument('--trees', dest='trees',
-                       help='Path to file holding the trees.')
+    parser.add_argument('--trees', dest='trees', help='Path to file holding the trees.')
     parser.add_argument('--columns', dest='columns', default=None,
-                       help='Path to csv file holding column index and column name.')
+                        help='Path to csv file holding column index and column name.')
     args = parser.parse_args()
     column_name_dict = {}
     if args.columns:
@@ -142,13 +164,13 @@ def main():
         tree_obj = Tree()
         tree_obj.create_tree(tree, column_name_dict)
         node_list = tree_obj.preorder(tree_obj.root)
-        node_dict = []
+        node_dict = {'tree': [], 'max_depth': tree_obj.max_depth, 'max_breadth': tree_obj.max_breadth}
         for node in node_list:
             name = node.data
             parent = None
             if node.parent:
                 parent = node.parent.data
-            node_dict.append({'name': name, 'parent': parent})
+            node_dict['tree'].append({'name': name, 'parent': parent})
         tree_list.append(node_dict)
     make_tree_viz(tree_list)
 

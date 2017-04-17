@@ -16,3 +16,6 @@ navigate to each of your trees.
 
 **Example Tree:**
 ![Example Tree](ExampleTree.png)
+
+**Credit**
+D3.js tree example from http://bl.ocks.org/d3noob/8326869 was a great help.
