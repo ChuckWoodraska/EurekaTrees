@@ -2,6 +2,7 @@ import csv
 import argparse
 import jinja2
 import json
+import webbrowser
 
 __author__ = 'Chuck Woodraska'
 
@@ -83,7 +84,6 @@ class Tree(object):
                 new_node_dict_right = {'name': node.right.data, 'children': []}
                 node_dict['children'].append(self.get_js_struct(node.right, new_node_dict_right))
         return node_dict
-
 
     def print_preorder(self, node):
         if node is not None:
@@ -179,6 +179,7 @@ def main():
         node_dict = {'tree': [js_struct], 'max_depth': tree_obj.max_depth, 'max_breadth': tree_obj.max_breadth}
         tree_list.append(node_dict)
     make_tree_viz(tree_list)
+    webbrowser.open_new('home.html')
 
 if __name__ == "__main__":
     main()
