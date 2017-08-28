@@ -26,7 +26,7 @@ class Tree(object):
         node = None
         for index, line in enumerate(tree['Contents']):
             if line.startswith('If'):
-                data_str = line[line.find('(')+1:line.find(')')]
+                data_str = line[line.find('(')+1:line.find(')')].replace(' ', '_', 1)
                 if len(column_names):
                     data_str = column_names[data_str.split(' ')[1]]+' '+' '.join(data_str.split(' ')[2:])
                 if not node:
@@ -142,7 +142,7 @@ def make_tree_viz(trees):
         # These are kind of magic numbers for max_depth and max_breadth for how big the canvas needs to be
         result = tree_template.render(tree=json.dumps(tree['tree']),
                                       max_depth=tree['max_depth']*120,
-                                      max_breadth=tree['max_depth']*250)
+                                      max_breadth=tree['max_depth']*750)
         with open('trees/tree{0}.html'.format(index+1), 'w') as tree_html:
             tree_html.write(result)
 
