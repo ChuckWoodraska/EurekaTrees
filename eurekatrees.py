@@ -87,6 +87,7 @@ class Tree(object):
 
     def print_preorder(self, node):
         if node is not None:
+            print(node.data)
             self.print_preorder(node.left)
             self.print_preorder(node.right)
 
