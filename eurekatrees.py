@@ -45,7 +45,9 @@ class Tree(object):
             elif line.startswith('Else'):
                 else_check = 1
             elif line.startswith('Predict'):
-                if else_check:
+                if not node:
+                    node = self.root = Node(data=float(line.rsplit(' ')[1]))
+                elif else_check:
                     else_check = 0
                     while node.right:
                         node = node.parent
