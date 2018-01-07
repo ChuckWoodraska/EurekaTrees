@@ -163,3 +163,5 @@
            Predict: 0.0
         Else (feature 14 > 0.0)
          Predict: 1.0
+  Tree 3:
+    Predict: 0.0

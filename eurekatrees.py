@@ -3,6 +3,7 @@ import argparse
 import jinja2
 import json
 import webbrowser
+import os
 
 __author__ = 'Chuck Woodraska'
 
@@ -133,20 +134,20 @@ def separate_trees(tree_file):
     return tree_list
 
 
-def make_tree_viz(trees):
+def make_tree_viz(trees, output_path):
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(["."]))
     home_template = env.get_template("templates/home_template.jinja2")
     tree_list = ['trees/tree{0}.html'.format(index+1) for index, tree in enumerate(trees)]
     result = home_template.render(trees=tree_list)
-    with open('home.html', 'w') as home_html:
+    with open(os.path.join(output_path, 'home.html'), 'w') as home_html:
         home_html.write(result)
     tree_template = env.get_template("templates/tree_template.jinja2")
     for index, tree in enumerate(trees):
         # These are kind of magic numbers for max_depth and max_breadth for how big the canvas needs to be
         result = tree_template.render(tree=json.dumps(tree['tree']),
-                                      max_depth=tree['max_depth']*120,
-                                      max_breadth=tree['max_depth']*750)
-        with open('trees/tree{0}.html'.format(index+1), 'w') as tree_html:
+                                      max_depth=tree['max_depth']*120 if tree['max_depth'] else 120,
+                                      max_breadth=tree['max_depth']*750 if tree['max_depth'] else 750)
+        with open(os.path.join(output_path, 'trees/tree{0}.html'.format(index+1)), 'w') as tree_html:
             tree_html.write(result)
 
 
@@ -166,9 +167,11 @@ def read_trees(trees_file):
 
 def main():
     parser = argparse.ArgumentParser(description='Parse a random forest')
-    parser.add_argument('--trees', dest='trees', help='Path to file holding the trees.')
+    parser.add_argument('--trees', dest='trees', help='Path to file holding the trees.', required=True)
     parser.add_argument('--columns', dest='columns', default=None,
                         help='Path to csv file holding column index and column name.')
+    parser.add_argument('--output_path', dest='output_path', default='./sample_output',
+                        help='Path to outputted files.')
     args = parser.parse_args()
     column_name_dict = {}
     if args.columns:
@@ -181,8 +184,9 @@ def main():
         js_struct = tree_obj.get_js_struct(tree_obj.root)
         node_dict = {'tree': [js_struct], 'max_depth': tree_obj.max_depth, 'max_breadth': tree_obj.max_breadth}
         tree_list.append(node_dict)
-    make_tree_viz(tree_list)
-    webbrowser.open_new('home.html')
+    make_tree_viz(tree_list, args.output_path)
+    webbrowser.open_new(os.path.join(args.output_path, 'home.html'))
+
 
 if __name__ == "__main__":
     main()
