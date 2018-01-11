@@ -81,11 +81,15 @@ class Tree(object):
             node_dict = {'name': node.data, 'children': []}
         if node is not None:
             if node.left:
-                new_node_dict_left = {'name': node.left.data, 'children': []}
+                new_node_dict_left = {'name': node.left.data, 'type':'left', 'is_prediction':False, 'children': []}
                 node_dict['children'].append(self.get_js_struct(node.left, new_node_dict_left))
             if node.right:
-                new_node_dict_right = {'name': node.right.data, 'children': []}
+                new_node_dict_right = {'name': node.right.data, 'type':'right', 'is_prediction':False, 'children': []}
                 node_dict['children'].append(self.get_js_struct(node.right, new_node_dict_right))
+            else:
+                node_dict['is_prediction'] = True
+            if node.parent is None:
+                node_dict['type'] = 'root'
         return node_dict
 
     def print_preorder(self, node):
