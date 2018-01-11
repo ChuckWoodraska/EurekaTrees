@@ -21,6 +21,15 @@
             stroke: #ccc;
             stroke-width: 2px;
         }
+        
+        rect{
+            stroke-width: 3px;
+            stroke: #8c8c8c;
+        }
+
+        .decision-mark{
+            font-weight: bold;
+}
 
     </style>
 
@@ -92,13 +101,19 @@
             });
         // Enter the nodes.
         var nodeEnter = node.enter().append("g")
-            .attr("class", "node")
+             .attr("class", function(d) {
+                result = "node";
+                if(d.is_prediction){
+                    result = result + " prediction";
+                } else {
+                    result = result + " decision";
+                }
+                result = result + " " + d.type;
+                return result;
+            })
             .attr("transform", function (d) {
                 return "translate(" + d.x * 4 + "," + d.y + ")";
             });
-        nodeEnter.append("circle")
-            .attr("r", 10)
-            .style("fill", "#fff");
 
         var predictionFlag = false;
 
@@ -123,6 +138,10 @@
             .style("fill-opacity", 1);
 
         if (predictionFlag) {
+            nodeEnter.append("circle")
+                .attr("r", 10)
+                .style("fill", "#fff");
+                
             nodeEnter.append("text")
                 .attr("y", function (d) {
                     return d.children || d._children ? -54 : 54;
@@ -157,6 +176,30 @@
                     }
                 })
                 .style("fill-opacity", 1);
+        } else {
+            nodeEnter.append("rect")
+                .attr("x", -15)
+                .attr("y", -15 )
+                .attr("transform", "rotate(45)")
+                .attr("width", "25")
+                .attr("height", "25")
+                .style("fill", "#fff")
+            nodeEnter.append("text")
+                .text("Yes")
+                .attr("text-anchor", "middle")
+                .attr("x", -30)
+                .attr("y", 30);
+            nodeEnter.append("text")
+                .text("No")
+                .attr("text-anchor", "middle")
+                .attr("x", 30)
+                .attr("y", 30);
+            nodeEnter.append("text")
+                .text("?")
+                .attr("class", "decision-mark")
+                .attr("text-anchor", "middle")
+                .attr("x", 0)
+                .attr("y", 0);
         }
 
 
