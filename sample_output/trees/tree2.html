@@ -22,6 +22,15 @@
             stroke-width: 2px;
         }
 
+        rect {
+            stroke-width: 3px;
+            stroke: #8c8c8c;
+        }
+
+        .decision-mark {
+            font-weight: bold;
+        }
+
     </style>
 
 </head>
@@ -35,7 +44,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-    var data = [{"name": "feature_0 <= 0.0", "children": [{"name": "feature_1 <= 0.0", "children": [{"name": 0.0, "children": []}, {"name": 1.0, "children": []}]}, {"name": "feature_2 <= 0.0", "children": [{"name": "feature_3 <= 0.0", "children": [{"name": "feature_4 <= 0.0", "children": [{"name": 0.0, "children": []}, {"name": 1.0, "children": []}]}, {"name": "feature_5 <= 0.0", "children": [{"name": 1.0, "children": []}, {"name": 0.0, "children": []}]}]}, {"name": "feature_6 <= 0.0", "children": [{"name": "feature_7 <= 0.0", "children": [{"name": "feature_8 <= 0.0", "children": [{"name": 0.0, "children": []}, {"name": 1.0, "children": []}]}, {"name": "feature_9 <= 0.0", "children": [{"name": 1.0, "children": []}, {"name": 0.0, "children": []}]}]}, {"name": "feature_10 <= 0.0", "children": [{"name": "feature_11 <= 0.0", "children": [{"name": "feature_12 <= 0.0", "children": [{"name": 0.0, "children": []}, {"name": 1.0, "children": []}]}, {"name": "feature_13 <= 0.0", "children": [{"name": 1.0, "children": []}, {"name": 0.0, "children": []}]}]}, {"name": "feature_14 <= 0.0", "children": [{"name": "feature_15 <= 0.0", "children": [{"name": "feature_16 <= 0.0", "children": [{"name": 0.0, "children": []}, {"name": 1.0, "children": []}]}, {"name": "feature_17 <= 0.0", "children": [{"name": 1.0, "children": []}, {"name": 0.0, "children": []}]}]}, {"name": 1.0, "children": []}]}]}]}]}]}];
+    var data = [{"children": [{"children": [{"children": [], "is_prediction": true, "type": "left", "name": 0.0}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "left", "name": "feature_1 <= 0.0"}, {"children": [{"children": [{"children": [{"children": [], "is_prediction": true, "type": "left", "name": 0.0}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "left", "name": "feature_4 <= 0.0"}, {"children": [{"children": [], "is_prediction": true, "type": "left", "name": 1.0}, {"children": [], "is_prediction": true, "type": "right", "name": 0.0}], "is_prediction": false, "type": "right", "name": "feature_5 <= 0.0"}], "is_prediction": false, "type": "left", "name": "feature_3 <= 0.0"}, {"children": [{"children": [{"children": [{"children": [], "is_prediction": true, "type": "left", "name": 0.0}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "left", "name": "feature_8 <= 0.0"}, {"children": [{"children": [], "is_prediction": true, "type": "left", "name": 1.0}, {"children": [], "is_prediction": true, "type": "right", "name": 0.0}], "is_prediction": false, "type": "right", "name": "feature_9 <= 0.0"}], "is_prediction": false, "type": "left", "name": "feature_7 <= 0.0"}, {"children": [{"children": [{"children": [{"children": [], "is_prediction": true, "type": "left", "name": 0.0}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "left", "name": "feature_12 <= 0.0"}, {"children": [{"children": [], "is_prediction": true, "type": "left", "name": 1.0}, {"children": [], "is_prediction": true, "type": "right", "name": 0.0}], "is_prediction": false, "type": "right", "name": "feature_13 <= 0.0"}], "is_prediction": false, "type": "left", "name": "feature_11 <= 0.0"}, {"children": [{"children": [{"children": [{"children": [], "is_prediction": true, "type": "left", "name": 0.0}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "left", "name": "feature_16 <= 0.0"}, {"children": [{"children": [], "is_prediction": true, "type": "left", "name": 1.0}, {"children": [], "is_prediction": true, "type": "right", "name": 0.0}], "is_prediction": false, "type": "right", "name": "feature_17 <= 0.0"}], "is_prediction": false, "type": "left", "name": "feature_15 <= 0.0"}, {"children": [], "is_prediction": true, "type": "right", "name": 1.0}], "is_prediction": false, "type": "right", "name": "feature_14 <= 0.0"}], "is_prediction": false, "type": "right", "name": "feature_10 <= 0.0"}], "is_prediction": false, "type": "right", "name": "feature_6 <= 0.0"}], "is_prediction": false, "type": "right", "name": "feature_2 <= 0.0"}], "type": "root", "name": "feature_0 <= 0.0"}];
 
     var dataMap = data.reduce(function (map, node) {
         map[node.name] = node;
@@ -92,19 +101,23 @@
             });
         // Enter the nodes.
         var nodeEnter = node.enter().append("g")
-            .attr("class", "node")
+            .attr("class", function (d) {
+                var result = "node";
+                if (d.is_prediction) {
+                    result = result + " prediction";
+                } else {
+                    result = result + " decision";
+                }
+                result = result + " " + d.type;
+                return result;
+            })
             .attr("transform", function (d) {
                 return "translate(" + d.x * 4 + "," + d.y + ")";
             });
-        nodeEnter.append("circle")
-            .attr("r", 10)
-            .style("fill", "#fff");
-
-        var predictionFlag = false;
 
         nodeEnter.append("text")
             .attr("y", function (d) {
-                return d.children || d._children ? -18 : 18;
+                return d.children || d._children ? -30 : 25;
             })
             .attr("dy", ".35em")
             .attr("text-anchor", "middle")
@@ -113,51 +126,77 @@
                     return d.name;
                 }
                 else {
-                    predictionFlag = true;
                     var splitArray = d.name.split(' ');
-                    return splitArray[splitArray.length-1];
+                    return splitArray[splitArray.length - 1];
 
                 }
 
             })
             .style("fill-opacity", 1);
 
-        if (predictionFlag) {
-            nodeEnter.append("text")
-                .attr("y", function (d) {
-                    return d.children || d._children ? -54 : 54;
-                })
-                .attr("dy", ".35em")
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                    if (typeof d.name === 'number') {
-                        return '';
-                    }
-                    else {
-                        predictionFlag = true;
-                        return d.name.split(' ')[0];
+        var predictions = nodeEnter.filter(function (d) {
+            return (d.is_prediction === true);
+        });
 
-                    }
-                })
-                .style("fill-opacity", 1);
-            nodeEnter.append("text")
-                .attr("y", function (d) {
-                    return d.children || d._children ? -36 : 36;
-                })
-                .attr("dy", ".35em")
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                    if (typeof d.name === 'number') {
-                        return '';
-                    }
-                    else {
-                        predictionFlag = true;
-                        return '<=';
+        predictions.append("circle")
+            .attr("cx", "0px")
+            .attr("cy", "0px")
+            .attr("r", "12px");
 
-                    }
-                })
-                .style("fill-opacity", 1);
-        }
+
+        var decisions = nodeEnter.filter(function (d) {
+            return (d.is_prediction !== true);
+        });
+
+        decisions.append("rect")
+            .attr("x", -15)
+            .attr("y", -15)
+            .attr("transform", "rotate(45)")
+            .attr("width", "25")
+            .attr("height", "25")
+            .style("fill", "#fff");
+
+        decisions
+            .append("text")
+            .text("Yes")
+            .attr("text-anchor", "middle")
+            .attr("x", -30)
+            .attr("y", 30);
+
+        decisions
+            .append("text")
+            .text("No")
+            .attr("text-anchor", "middle")
+            .attr("x", 30)
+            .attr("y", 30);
+
+        decisions
+            .append("text")
+            .text("?")
+            .attr("class", "decision-mark")
+            .attr("text-anchor", "middle")
+            .attr("x", 0)
+            .attr("y", 0);
+
+        decisions.append("text")
+            .attr("y", function (d) {
+                return d.children || d._children ? -60 : 60;
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d.name.split(' ')[0];
+            })
+            .style("fill-opacity", 1);
+
+        decisions.append("text")
+            .attr("y", function (d) {
+                return d.children || d._children ? -44 : 44;
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text("<=")
+            .style("fill-opacity", 1);
 
 
         // Declare the links

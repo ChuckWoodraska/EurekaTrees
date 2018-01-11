@@ -21,15 +21,15 @@
             stroke: #ccc;
             stroke-width: 2px;
         }
-        
-        rect{
+
+        rect {
             stroke-width: 3px;
             stroke: #8c8c8c;
         }
 
-        .decision-mark{
+        .decision-mark {
             font-weight: bold;
-}
+        }
 
     </style>
 
@@ -101,9 +101,9 @@
             });
         // Enter the nodes.
         var nodeEnter = node.enter().append("g")
-             .attr("class", function(d) {
-                result = "node";
-                if(d.is_prediction){
+            .attr("class", function (d) {
+                var result = "node";
+                if (d.is_prediction) {
                     result = result + " prediction";
                 } else {
                     result = result + " decision";
@@ -115,11 +115,9 @@
                 return "translate(" + d.x * 4 + "," + d.y + ")";
             });
 
-        var predictionFlag = false;
-
         nodeEnter.append("text")
             .attr("y", function (d) {
-                return d.children || d._children ? -18 : 18;
+                return d.children || d._children ? -30 : 25;
             })
             .attr("dy", ".35em")
             .attr("text-anchor", "middle")
@@ -128,79 +126,77 @@
                     return d.name;
                 }
                 else {
-                    predictionFlag = true;
                     var splitArray = d.name.split(' ');
-                    return splitArray[splitArray.length-1];
+                    return splitArray[splitArray.length - 1];
 
                 }
 
             })
             .style("fill-opacity", 1);
 
-        if (predictionFlag) {
-            nodeEnter.append("circle")
-                .attr("r", 10)
-                .style("fill", "#fff");
-                
-            nodeEnter.append("text")
-                .attr("y", function (d) {
-                    return d.children || d._children ? -54 : 54;
-                })
-                .attr("dy", ".35em")
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                    if (typeof d.name === 'number') {
-                        return '';
-                    }
-                    else {
-                        predictionFlag = true;
-                        return d.name.split(' ')[0];
+        var predictions = nodeEnter.filter(function (d) {
+            return (d.is_prediction === true);
+        });
 
-                    }
-                })
-                .style("fill-opacity", 1);
-            nodeEnter.append("text")
-                .attr("y", function (d) {
-                    return d.children || d._children ? -36 : 36;
-                })
-                .attr("dy", ".35em")
-                .attr("text-anchor", "middle")
-                .text(function (d) {
-                    if (typeof d.name === 'number') {
-                        return '';
-                    }
-                    else {
-                        predictionFlag = true;
-                        return '<=';
+        predictions.append("circle")
+            .attr("cx", "0px")
+            .attr("cy", "0px")
+            .attr("r", "12px");
 
-                    }
-                })
-                .style("fill-opacity", 1);
-        } else {
-            nodeEnter.append("rect")
-                .attr("x", -15)
-                .attr("y", -15 )
-                .attr("transform", "rotate(45)")
-                .attr("width", "25")
-                .attr("height", "25")
-                .style("fill", "#fff")
-            nodeEnter.append("text")
-                .text("Yes")
-                .attr("text-anchor", "middle")
-                .attr("x", -30)
-                .attr("y", 30);
-            nodeEnter.append("text")
-                .text("No")
-                .attr("text-anchor", "middle")
-                .attr("x", 30)
-                .attr("y", 30);
-            nodeEnter.append("text")
-                .text("?")
-                .attr("class", "decision-mark")
-                .attr("text-anchor", "middle")
-                .attr("x", 0)
-                .attr("y", 0);
-        }
+
+        var decisions = nodeEnter.filter(function (d) {
+            return (d.is_prediction !== true);
+        });
+
+        decisions.append("rect")
+            .attr("x", -15)
+            .attr("y", -15)
+            .attr("transform", "rotate(45)")
+            .attr("width", "25")
+            .attr("height", "25")
+            .style("fill", "#fff");
+
+        decisions
+            .append("text")
+            .text("Yes")
+            .attr("text-anchor", "middle")
+            .attr("x", -30)
+            .attr("y", 30);
+
+        decisions
+            .append("text")
+            .text("No")
+            .attr("text-anchor", "middle")
+            .attr("x", 30)
+            .attr("y", 30);
+
+        decisions
+            .append("text")
+            .text("?")
+            .attr("class", "decision-mark")
+            .attr("text-anchor", "middle")
+            .attr("x", 0)
+            .attr("y", 0);
+
+        decisions.append("text")
+            .attr("y", function (d) {
+                return d.children || d._children ? -60 : 60;
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d.name.split(' ')[0];
+            })
+            .style("fill-opacity", 1);
+
+        decisions.append("text")
+            .attr("y", function (d) {
+                return d.children || d._children ? -44 : 44;
+            })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text("<=")
+            .style("fill-opacity", 1);
 
 
         // Declare the links
