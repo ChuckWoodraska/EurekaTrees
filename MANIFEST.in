@@ -1,4 +1,2 @@
-include sample_files
-include sample_output
-include templates
+recursive-include eurekatrees/templates *
 include README.md

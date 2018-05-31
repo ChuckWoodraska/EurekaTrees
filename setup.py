@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='eurekatrees',
-      version='0.2',
+      version='0.3',
       description='Spark MLLib debug string converter to visualization',
       url='http://github.com/ChuckWoodraska/EurekaTrees',
       author='Chuck Woodraska',
