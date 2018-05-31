@@ -1,0 +1,4 @@
+include sample_files
+include sample_output
+include templates
+include README.md

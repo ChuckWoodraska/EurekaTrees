@@ -50,3 +50,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+.idea/
+dist/
+eurekatrees.egg-info/
+eurekatrees/__pycache__/
+build/

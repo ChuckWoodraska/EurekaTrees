@@ -5,8 +5,6 @@ import json
 import webbrowser
 import os
 
-__author__ = 'Chuck Woodraska'
-
 
 class Node(object):
     def __init__(self, data):
