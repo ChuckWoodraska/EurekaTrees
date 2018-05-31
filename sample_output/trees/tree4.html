@@ -44,7 +44,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-    var data = [{"children": [], "is_prediction": true, "type": "root", "name": 0.0}];
+    var data = [{"is_prediction": true, "type": "root", "name": 0.0, "children": []}];
 
     var dataMap = data.reduce(function (map, node) {
         map[node.name] = node;

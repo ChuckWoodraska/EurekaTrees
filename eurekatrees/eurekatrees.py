@@ -25,9 +25,9 @@ class Tree(object):
         node = None
         for index, line in enumerate(tree['Contents']):
             if line.startswith('If'):
-                data_str = line[line.find('(')+1:line.find(')')].replace(' ', '_', 1)
+                data_str = line[line.find('(') + 1:line.find(')')].replace(' ', '_', 1)
                 if len(column_names):
-                    data_str = column_names[data_str.split(' ')[1]]+' '+' '.join(data_str.split(' ')[2:])
+                    data_str = column_names[data_str.split('_')[1].split(' ')[0]] + ' ' + ' '.join(data_str.split('_')[1].split(' ')[1:])
                 if not node:
                     node = self.root = Node(data=data_str)
                 elif else_check:
@@ -79,10 +79,10 @@ class Tree(object):
             node_dict = {'name': node.data, 'children': []}
         if node is not None:
             if node.left:
-                new_node_dict_left = {'name': node.left.data, 'type':'left', 'is_prediction':False, 'children': []}
+                new_node_dict_left = {'name': node.left.data, 'type': 'left', 'is_prediction': False, 'children': []}
                 node_dict['children'].append(self.get_js_struct(node.left, new_node_dict_left))
             if node.right:
-                new_node_dict_right = {'name': node.right.data, 'type':'right', 'is_prediction':False, 'children': []}
+                new_node_dict_right = {'name': node.right.data, 'type': 'right', 'is_prediction': False, 'children': []}
                 node_dict['children'].append(self.get_js_struct(node.right, new_node_dict_right))
             else:
                 node_dict['is_prediction'] = True
@@ -116,7 +116,7 @@ class Tree(object):
     def get_max_breadth(self, max_depth=None):
         if max_depth is None:
             max_depth = self.get_max_depth(self.root)
-        return 2**max_depth
+        return 2 ** max_depth
 
 
 def separate_trees(tree_file):
@@ -139,7 +139,7 @@ def separate_trees(tree_file):
 def make_tree_viz(trees, output_path):
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(["."]))
     home_template = env.get_template("templates/home_template.jinja2")
-    tree_list = ['trees/tree{0}.html'.format(index+1) for index, tree in enumerate(trees)]
+    tree_list = ['trees/tree{0}.html'.format(index + 1) for index, tree in enumerate(trees)]
     result = home_template.render(trees=tree_list)
     with open(os.path.join(output_path, 'home.html'), 'w') as home_html:
         home_html.write(result)
@@ -147,9 +147,9 @@ def make_tree_viz(trees, output_path):
     for index, tree in enumerate(trees):
         # These are kind of magic numbers for max_depth and max_breadth for how big the canvas needs to be
         result = tree_template.render(tree=json.dumps(tree['tree']),
-                                      max_depth=tree['max_depth']*120 if tree['max_depth'] else 120,
-                                      max_breadth=tree['max_depth']*750 if tree['max_depth'] else 750)
-        with open(os.path.join(output_path, 'trees/tree{0}.html'.format(index+1)), 'w') as tree_html:
+                                      max_depth=tree['max_depth'] * 120 if tree['max_depth'] else 120,
+                                      max_breadth=tree['max_depth'] * 750 if tree['max_depth'] else 750)
+        with open(os.path.join(output_path, 'trees/tree{0}.html'.format(index + 1)), 'w') as tree_html:
             tree_html.write(result)
 
 
