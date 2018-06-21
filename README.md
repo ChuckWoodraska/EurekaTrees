@@ -13,7 +13,7 @@ visual version of the trees. You can get this from printing out the debug string
 
 **Output:**<br>
 The output path for generated files can be specified with the output_path switch which defaults to the current working dir.
-`eurekatrees --trees ./smaple_files/trees.txt --output_path .`
+`eurekatrees --trees ./sample_files/trees.txt --output_path .`
 
 **If you have a csv with the names of your features you can run that command with the columns switch.**<br>
 `eurekatrees --trees ./sample_files/trees.txt --columns ./sample_files/columns.csv`
