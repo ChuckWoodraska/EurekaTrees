@@ -21,7 +21,7 @@ The output path for generated files can be specified with the output_path switch
 The output are a bunch of HTML files. It auto opens home.html in your default browser, but you can also open up the file home.html allowing you to easily navigate to each of your trees.
 
 **Important Note:**<br>
-The last change that was made splays out branches further which means more scrolling for right now, but I am looking into d3 canvas zooming to fit it to the page then allow the user to move around inside of the canvas. If anybody have any experience with doing this feel free to contribute or pass along any tips. Thanks!
+The last change that was made splays out branches further which means more scrolling for right now, but I am looking into d3 canvas zooming to fit it to the page then allow the user to move around inside of the canvas. If anybody has any experience with doing this feel free to contribute or pass along any tips. Thanks!
 
 **Example Tree:**
 ![Example Tree](ExampleTree.png)
