@@ -23,7 +23,7 @@ class Tree(object):
     def create_tree(self, tree, column_names):
         else_check = 0
         node = None
-        for index, line in enumerate(tree['Contents']):
+        for line in tree['Contents']:
             if line.startswith('If'):
                 data_str = line[line.find('(') + 1:line.find(')')].replace(' ', '_', 1)
                 if len(column_names):
@@ -105,13 +105,9 @@ class Tree(object):
     def get_max_depth(self, node):
         if node is None:
             return 0
-        else:
-            left_depth = self.get_max_depth(node.left)
-            right_depth = self.get_max_depth(node.right)
-            if left_depth > right_depth:
-                return left_depth + 1
-            else:
-                return right_depth + 1
+        left_depth = self.get_max_depth(node.left)
+        right_depth = self.get_max_depth(node.right)
+        return left_depth + 1 if left_depth > right_depth else right_depth + 1
 
     def get_max_breadth(self, max_depth=None):
         if max_depth is None:
@@ -177,12 +173,10 @@ def main():
     parser.add_argument('--output_path', dest='output_path', default='.',
                         help='Path to outputted files.')
     args = parser.parse_args()
-    column_name_dict = {}
-    if args.columns:
-        column_name_dict = read_columns(args.columns)
+    column_name_dict = read_columns(args.columns) if args.columns else {}
     trees = read_trees(args.trees)
     tree_list = []
-    for index, tree in enumerate(trees):
+    for tree in trees:
         tree_obj = Tree()
         tree_obj.create_tree(tree, column_name_dict)
         js_struct = tree_obj.get_js_struct(tree_obj.root)
